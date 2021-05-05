@@ -16,10 +16,11 @@ router.post("/add/:user", async (req, res) => {
   }
 });
 
-router.get("/get/:user", async (req, res) => {
+router.get("/get/:lastname", async (req, res) => {
   try {
-    const { user } = req.params;
-    const driver = await Driver.findOne({ user });
+    const { lastname } = req.params;
+
+    const driver = await Driver.findOne({ lastname });
     res.json(driver);
   } catch (err) {
     console.error(err.message);
