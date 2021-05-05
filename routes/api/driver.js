@@ -3,9 +3,11 @@ const router = express.Router();
 
 const Driver = require("../../models/Driver");
 
-router.post("/add", async (req, res) => {
+router.post("/add/:user", async (req, res) => {
   try {
+    const { user } = req.params;
     const driver = new Driver(req.body);
+    driver.user = user;
     await driver.save();
     res.send("ok");
   } catch (err) {
@@ -14,10 +16,10 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.get("/get", async (req, res) => {
+router.get("/get/:user", async (req, res) => {
   try {
-    const { phone } = req.body;
-    const driver = await Driver.findOne({ phone });
+    const { user } = req.params;
+    const driver = await Driver.findOne({ user });
     res.json(driver);
   } catch (err) {
     console.error(err.message);

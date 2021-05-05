@@ -2,9 +2,7 @@ const mongoose = require("mongoose");
 
 const ItinerarySchema = new mongoose.Schema({
   user: {
-    name: {
-      type: String,
-    },
+    type: String,
   },
   name: {
     type: String,
