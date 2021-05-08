@@ -3,9 +3,11 @@ const router = express.Router();
 
 const Vehicle = require("../../models/Vehicle");
 
-router.post("/add", async (req, res) => {
+router.post("/add/:user", async (req, res) => {
   try {
+    const { user } = req.params;
     const vehicle = new Vehicle(req.body);
+    vehicle.user = user;
     await vehicle.save();
     res.send("ok");
   } catch (err) {
@@ -13,31 +15,46 @@ router.post("/add", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-router.get("/get", async (req, res) => {
+router.post("/get/:user", async (req, res) => {
   try {
-    const { name } = req.body;
-    const vehicle = await Vehicle.findOne({ name });
+    const { _id } = req.body;
+    const { user } = req.params;
+    const vehicle = await Vehicle.findOne({ _id, user });
     res.json(vehicle);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
   }
 });
-router.put("/update", async (req, res) => {
+router.get("/getall/:user", async (req, res) => {
+  try {
+    const { user } = req.params;
+    const vehicles = await Vehicle.find({ user });
+    res.json(vehicles);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+router.put("/update/:user", async (req, res) => {
   try {
     const newVehicle = req.body;
-    const { id } = req.body;
-    await Vehicle.findOneAndUpdate({ _id: id }, newVehicle, { new: true });
+    const { _id } = req.body;
+    const { user } = req.params;
+    const vehicle = await Vehicle.findOneAndUpdate({ _id, user }, newVehicle, {
+      new: true,
+    });
     res.send("Vehicle successfully updated");
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
   }
 });
-router.delete("/delete", async (req, res) => {
+router.delete("/delete/:user", async (req, res) => {
   try {
-    const { id } = req.body;
-    await Vehicle.findOneAndDelete({ _id: id });
+    const { user } = req.params;
+    const { _id } = req.body;
+    await Vehicle.findOneAndDelete({ _id, user });
     res.send("Vehicle successfully deleted");
   } catch (err) {
     console.error(err.message);

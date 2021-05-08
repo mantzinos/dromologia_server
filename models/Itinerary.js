@@ -4,15 +4,11 @@ const ItinerarySchema = new mongoose.Schema({
   user: {
     type: String,
   },
-  name: {
-    type: String,
-    required: true,
-  },
-  range: {
-    type: String,
-    required: true,
-  },
   driver: {
+    type: String,
+    required: true,
+  },
+  driverphoto: {
     type: String,
     required: true,
   },
@@ -20,9 +16,17 @@ const ItinerarySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  date: {
+  destination: {
+    type: String,
+    required: true,
+  },
+
+  start: {
     type: Date,
     default: Date.now,
+  },
+  stop: {
+    type: Date,
   },
 });
 

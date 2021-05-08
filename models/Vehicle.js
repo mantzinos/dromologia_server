@@ -3,18 +3,25 @@ const mongoose = require("mongoose");
 const VehicleSchema = new mongoose.Schema({
   user: {
     type: String,
-    unique: true,
+    required: true,
   },
   type: {
     type: String,
     required: true,
   },
-  name: {
+  fuel: {
     type: String,
     required: true,
-    unique: true,
+  },
+  color: {
+    type: String,
+    required: true,
   },
   brand: {
+    type: String,
+    required: true,
+  },
+  fridge: {
     type: String,
     required: true,
   },

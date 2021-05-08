@@ -14,5 +14,6 @@ app.use("/api", require("./routes/api/user"));
 app.use("/api/vehicle", require("./routes/api/vehicle"));
 app.use("/api/driver", require("./routes/api/driver"));
 app.use("/api/itinerary", require("./routes/api/itinerary"));
+app.use("/api/destination", require("./routes/api/destination"));
 
 app.listen(PORT, () => console.log(`Server starts at port ${PORT}`));
