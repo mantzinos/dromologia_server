@@ -36,7 +36,7 @@ router.get("/getall/:user", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-router.put("/update/:user", async (req, res) => {
+router.put("/update/", async (req, res) => {
   try {
     const newVehicle = req.body;
     const { _id } = req.body;

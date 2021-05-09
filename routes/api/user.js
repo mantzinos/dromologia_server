@@ -45,15 +45,37 @@ router.put("/update", async (req, res) => {
   try {
     const salt = await bcrypt.genSalt(10);
 
-    const { username, password } = req.body;
+    const { password, email, username } = req.body;
     const newPass = await bcrypt.hash(password, salt);
-    const user = await User.findOneAndUpdate(
-      { username },
-      { password: newPass },
-      { new: true }
-    );
+    const newUser = req.body;
+    newUser.password = newPass;
+    console.log(newUser);
+    const user = await User.findOneAndUpdate({ username }, newUser, {
+      new: true,
+    });
     res.send("User updated successfully");
   } catch (err) {
+    res.status(500).send("Server error");
+  }
+});
+router.delete("/delete/:username", async (req, res) => {
+  try {
+    const { password } = req.body;
+    const { username } = req.params;
+    const user = await User.findOne({ username });
+    console.log(password);
+    console.log(user);
+    if (user) {
+      const checkPass = await bcrypt.compare(password, user.password);
+      if (checkPass) {
+        await User.findOneAndDelete({ username: username });
+        res.send("ok");
+      } else if (!checkPass) {
+        res.send("wrong password");
+      }
+    }
+  } catch (err) {
+    console.error(err.message);
     res.status(500).send("Server error");
   }
 });
