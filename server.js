@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json({ extended: false }));
 
-const PORT = 5000 || process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 app.use("/api", require("./routes/api/user"));
 app.use("/api/vehicle", require("./routes/api/vehicle"));
